@@ -88,8 +88,11 @@ class DraftaidButton extends HTMLElement {
     const href = this.getAttribute("href")
     const disabled = this.hasAttribute("disabled")
 
-    // Tailwind `dark:` utilities need a `.dark` ancestor inside the shadow.
-    this.wrapper.className = this.getAttribute("theme") === "dark" ? "dark" : ""
+    // `da-root` pins the text color to the theme's --foreground (see
+    // styles.css) so inheriting variants (outline, ghost) don't pick up the
+    // host page's color. `dark` enables Tailwind `dark:` utilities + tokens.
+    this.wrapper.className =
+      this.getAttribute("theme") === "dark" ? "da-root dark" : "da-root"
 
     // Optional Phosphor icon.
     const iconName = this.getAttribute("icon")

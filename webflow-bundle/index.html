@@ -14,7 +14,9 @@
       }
       h1 { font-size: 1.1rem; }
       .row { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin: 1rem 0 2rem; }
-      .dark-panel { background: #14121c; color: #fff; padding: 1.5rem; border-radius: 12px; }
+      /* No text color set here on purpose: mimics a Webflow dark section that
+         does not override color, so the button can't lean on ambient color. */
+      .dark-panel { background: #14121c; padding: 1.5rem; border-radius: 12px; }
     </style>
   </head>
   <body>

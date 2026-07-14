@@ -53,7 +53,7 @@ Every push to `main` rebuilds and redeploys automatically.
 
 Available `icon` names (Phosphor): `arrow-right`, `arrow-left`, `arrow-up-right`,
 `caret-right`, `check`, `download`, `external-link`, `plus`, `mail`, `calendar`,
-`play`, `star`, `search`, `send`. Add more in `src/icons.ts`.
+`play`, `star`, `search`, `send`, `plugs-connected`. Add more in `src/icons.ts`.
 
 Examples:
 

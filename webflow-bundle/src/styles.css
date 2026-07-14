@@ -31,6 +31,13 @@
   @apply border-border border-b-input from-card/100 to-card/20 dark:border-border/10 dark:border-t-border/30 dark:from-primary/15 dark:to-primary/5 border bg-linear-to-b dark:border-b-0;
 }
 
+/* Root wrapper inside the shadow. Pins the base text color to the theme's
+   foreground so variants that inherit color (outline, ghost) match the design
+   system instead of the host page's color. */
+.da-root {
+  color: var(--foreground);
+}
+
 /* Design tokens scoped to the shadow root host (mirrors the design system's
    light theme :root, and .dark when theme="dark"). */
 :host {

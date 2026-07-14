@@ -16,6 +16,7 @@ import {
   Star,
   MagnifyingGlass,
   PaperPlaneTilt,
+  PlugsConnected,
   type Icon,
 } from "@phosphor-icons/react"
 
@@ -34,6 +35,7 @@ export const ICONS: Record<string, Icon> = {
   star: Star,
   search: MagnifyingGlass,
   send: PaperPlaneTilt,
+  "plugs-connected": PlugsConnected,
 }
 
 export type IconName = keyof typeof ICONS
