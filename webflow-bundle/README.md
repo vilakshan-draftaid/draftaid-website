@@ -43,10 +43,25 @@ Every push to `main` rebuilds and redeploys automatically.
 |---|---|---|
 | `text` | any string | `Button` |
 | `variant` | `default`, `secondary`, `outline`, `ghost`, `glow`, `link`, `destructive` | `default` |
-| `size` | `default`, `xs`, `sm`, `lg` | `default` |
+| `size` | `default`, `xs`, `sm`, `lg`, `icon` (icon-only) | `default` |
 | `href` | any URL (renders as a link) | none |
 | `disabled` | present = disabled | off |
 | `theme` | `dark` for the dark palette | light |
+| `icon` | a Phosphor icon name (see below) | none |
+| `icon-position` | `start`, `end` | `start` |
+| `icon-weight` | `thin`, `light`, `regular`, `bold`, `fill`, `duotone` | `regular` |
+
+Available `icon` names (Phosphor): `arrow-right`, `arrow-left`, `arrow-up-right`,
+`caret-right`, `check`, `download`, `external-link`, `plus`, `mail`, `calendar`,
+`play`, `star`, `search`, `send`. Add more in `src/icons.ts`.
+
+Examples:
+
+```html
+<draftaid-button text="Continue" variant="default" icon="arrow-right" icon-position="end"></draftaid-button>
+<draftaid-button text="Schedule a Demo" variant="secondary" icon="calendar"></draftaid-button>
+<draftaid-button text="Add" size="icon" icon="plus"></draftaid-button>
+```
 
 ## Keeping in sync
 

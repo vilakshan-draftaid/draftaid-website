@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, DownloadSimple, Plus } from "@phosphor-icons/react/dist/ssr"
 
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -59,46 +59,66 @@ export default function Page() {
 
         <Block
           title="Button"
-          description="Variants, sizes, and states from launchui."
+          description="Each button shows the <draftaid-button> attribute to copy into a Webflow embed."
         >
+          <pre className="bg-muted mb-8 overflow-x-auto rounded-md p-3 font-mono text-xs">
+            {`<draftaid-button text="Get Started" variant="default" size="default" href="/signup"></draftaid-button>`}
+          </pre>
+
           <div className="space-y-8">
             <Row label="Variants">
               {BUTTON_VARIANTS.map((variant) => (
-                <Button key={variant} variant={variant}>
-                  {label(variant)}
-                </Button>
+                <Chip key={variant} code={`variant="${variant}"`}>
+                  <Button variant={variant}>{label(variant)}</Button>
+                </Chip>
               ))}
             </Row>
 
             <Row label="Sizes">
-              <Button size="xs">Extra small</Button>
-              <Button size="sm">Small</Button>
-              <Button size="default">Default</Button>
-              <Button size="lg">Large</Button>
-              <Button size="icon" aria-label="Continue">
-                <ArrowRight />
-              </Button>
+              {BUTTON_SIZES.map((size) => (
+                <Chip key={size} code={`size="${size}"`}>
+                  <Button size={size}>{SIZE_LABELS[size]}</Button>
+                </Chip>
+              ))}
             </Row>
 
-            <Row label="With icon">
-              <Button>
-                Continue
-                <ArrowRight />
-              </Button>
-              <Button variant="outline">
-                Continue
-                <ArrowRight />
-              </Button>
+            <Row label="As link">
+              <Chip code={`href="/your-link"`}>
+                <Button asChild>
+                  <a href="#">Get Started</a>
+                </Button>
+              </Chip>
+            </Row>
+
+            <Row label="Icons">
+              <Chip code={`icon="download"`}>
+                <Button>
+                  <DownloadSimple />
+                  Download
+                </Button>
+              </Chip>
+              <Chip code={`icon="arrow-right" icon-position="end"`}>
+                <Button>
+                  Continue
+                  <ArrowRight />
+                </Button>
+              </Chip>
+              <Chip code={`size="icon" icon="plus"`}>
+                <Button size="icon" aria-label="Add">
+                  <Plus />
+                </Button>
+              </Chip>
             </Row>
 
             <Row label="States">
-              <Button disabled>Disabled</Button>
-              <Button variant="outline" disabled>
-                Disabled
-              </Button>
-              <Button asChild variant="link">
-                <a href="#">As link (asChild)</a>
-              </Button>
+              <Chip code="disabled">
+                <Button disabled>Disabled</Button>
+              </Chip>
+              <Chip code={`theme="dark"`}>
+                <div className="dark bg-background rounded-md p-2">
+                  <Button>On dark</Button>
+                </div>
+              </Chip>
             </Row>
           </div>
         </Block>
@@ -129,6 +149,15 @@ const BUTTON_VARIANTS = [
   "link",
   "destructive",
 ] as const
+
+const BUTTON_SIZES = ["xs", "sm", "default", "lg"] as const
+
+const SIZE_LABELS: Record<(typeof BUTTON_SIZES)[number], string> = {
+  xs: "Extra small",
+  sm: "Small",
+  default: "Default",
+  lg: "Large",
+}
 
 const SWATCHES: { name: string; var: string; className: string }[] = [
   { name: "Background", var: "--background", className: "bg-background border" },
@@ -166,6 +195,17 @@ function Block({
       </div>
       {children}
     </section>
+  )
+}
+
+function Chip({ code, children }: { code: string; children: ReactNode }) {
+  return (
+    <div className="flex flex-col items-start gap-1.5">
+      {children}
+      <code className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 font-mono text-[11px]">
+        {code}
+      </code>
+    </div>
   )
 }
 

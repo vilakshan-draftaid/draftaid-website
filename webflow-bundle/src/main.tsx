@@ -1,7 +1,8 @@
-import { createElement, type ReactNode } from "react"
+import { createElement, Fragment, type ReactNode } from "react"
 import { createRoot, type Root } from "react-dom/client"
 
 import { Button } from "@/button"
+import { ICONS, type IconWeight } from "@/icons"
 // `?inline` gives the compiled Tailwind CSS as a string so we can inject it
 // into each element's shadow root (isolated from the host page's styles).
 import css from "@/styles.css?inline"
@@ -14,7 +15,7 @@ type Variant =
   | "glow"
   | "link"
   | "destructive"
-type Size = "default" | "xs" | "sm" | "lg"
+type Size = "default" | "xs" | "sm" | "lg" | "icon"
 
 const TAG = "draftaid-button"
 
@@ -36,7 +37,17 @@ function ensureGlobalProperties(cssText: string) {
 
 class DraftaidButton extends HTMLElement {
   static get observedAttributes() {
-    return ["text", "variant", "size", "href", "disabled", "theme"]
+    return [
+      "text",
+      "variant",
+      "size",
+      "href",
+      "disabled",
+      "theme",
+      "icon",
+      "icon-position",
+      "icon-weight",
+    ]
   }
 
   private root: Root | null = null
@@ -80,14 +91,46 @@ class DraftaidButton extends HTMLElement {
     // Tailwind `dark:` utilities need a `.dark` ancestor inside the shadow.
     this.wrapper.className = this.getAttribute("theme") === "dark" ? "dark" : ""
 
+    // Optional Phosphor icon.
+    const iconName = this.getAttribute("icon")
+    const iconWeight =
+      (this.getAttribute("icon-weight") as IconWeight | null) ?? "regular"
+    const iconAtEnd = this.getAttribute("icon-position") === "end"
+    const IconComp = iconName ? ICONS[iconName] : undefined
+    if (iconName && !IconComp) {
+      console.warn(`[draftaid-button] unknown icon "${iconName}"`)
+    }
+    const iconEl = IconComp
+      ? createElement(IconComp, { weight: iconWeight })
+      : null
+
+    // Icon-only button shows just the icon (text becomes the accessible label).
+    const content: ReactNode =
+      size === "icon"
+        ? (iconEl ?? text)
+        : iconEl
+          ? createElement(
+              Fragment,
+              null,
+              iconAtEnd ? text : iconEl,
+              iconAtEnd ? iconEl : text,
+            )
+          : text
+
     const child: ReactNode = href
-      ? createElement("a", { href }, text)
-      : text
+      ? createElement("a", { href }, content)
+      : content
 
     this.root.render(
       createElement(
         Button,
-        { variant, size, asChild: Boolean(href), disabled: disabled || undefined },
+        {
+          variant,
+          size,
+          asChild: Boolean(href),
+          disabled: disabled || undefined,
+          "aria-label": size === "icon" ? text : undefined,
+        },
         child,
       ),
     )
