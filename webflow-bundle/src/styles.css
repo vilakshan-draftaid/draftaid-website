@@ -41,12 +41,26 @@
 /* Design tokens scoped to the shadow root host (mirrors the design system's
    light theme :root, and .dark when theme="dark"). */
 :host {
+  /* Raw brand palette (constants; semantic tokens below reference these).
+     Keep in sync with the design system's globals.css. */
+  --draftacid-50: #e7fff6;
+  --draftacid-100: #c6ffe6;
+  --draftacid-200: #92ffd5;
+  --draftacid-300: #4dffc6;
+  --draftacid-400: #25ffc0;
+  --draftacid-500: #00e8ad;
+  --draftacid-600: #00be91;
+  --draftacid-700: #009878;
+  --draftacid-800: #00785f;
+  --draftacid-900: #006250;
+  --draftacid-950: #00382f;
+
   --background: oklch(97.65% 0.001 17.18);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(66.5% 0.1804 47.04);
-  --primary-foreground: oklch(0.985 0 0);
+  --primary: var(--draftacid-800);
+  --primary-foreground: #ffffff;
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.21 0.006 285.885);
   --accent: oklch(0.927 0.001 286.375);
